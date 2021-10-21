@@ -1,0 +1,23 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Roboto, sans-serif;
+}
+
+@media (min-width: 1200px) {
+  html {
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 1200px) {
+  html {
+    overflow: scroll;
+  }
+}
+
+body {
+  color: #e1e1e6;
+  background: #121214;
+}
