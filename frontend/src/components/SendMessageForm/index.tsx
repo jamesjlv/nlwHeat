@@ -3,20 +3,35 @@ import { VscGithubInverted, VscSignOut } from 'react-icons/vsc';
 import { AuthContext } from '../../contexts/Auth';
 import { api } from '../../services/api';
 import styles from './styles.module.scss';
+import Lottie from 'react-lottie';
+import animationData from '../../lotties/sucess.json';
 
 export function SendMessageFrom() {
   const { user, signOut } = useContext(AuthContext);
   const [message, setMessage] = useState('');
+  const [status, setStatus] = useState(false);
+  const defaultOptions = {
+    loop: false,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice',
+    },
+  };
 
   async function handleSendMessage(event: FormEvent) {
     event.preventDefault();
     if (!message.trim()) {
       return;
     }
+    setStatus(true);
 
     await api.post('messages', { message });
 
     setMessage('');
+    setTimeout(() => {
+      setStatus(false);
+    }, 1000);
   }
 
   return (
@@ -43,8 +58,18 @@ export function SendMessageFrom() {
           placeholder="Qual sua expectativa para o evento?"
           onChange={(event) => setMessage(event.target.value)}
           value={message}
+          disabled={status}
         />
-        <button type="submit">Enviar mensagem</button>
+        {!!status ? (
+          <Lottie
+            options={defaultOptions}
+            isStopped={!status}
+            isClickToPauseDisabled
+            style={{ position: 'absolute', width: '100%', top: 0 }}
+          />
+        ) : (
+          <button type="submit">Enviar mensagem</button>
+        )}
       </form>
     </div>
   );

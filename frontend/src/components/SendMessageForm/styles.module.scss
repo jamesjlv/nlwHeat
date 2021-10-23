@@ -65,6 +65,7 @@
 }
 .sendMessageForm {
   display: flex;
+  position: relative;
   flex-direction: column;
   align-self: stretch;
   margin-top: 48px;
@@ -114,8 +115,18 @@
     align-items: center;
     justify-content: center;
 
+    animation: fadeIn 400ms;
+
     &:hover {
       filter: brightness(0.9);
+    }
+  }
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
     }
   }
 }
